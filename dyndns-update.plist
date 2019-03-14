@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>org.detheux.mountvps</string>
+
+  <key>ProgramArguments</key>
+    <array>
+            <string>/bin/sh</string>
+            <string>/Users/Arnaud/Library/Scripts/dyndns_update.sh</string>
+    </array>
+  <key>StartInterval</key>
+  <integer>21600</integer>
+  <key>RunAtLoad</key>
+  <true/>
+  <key>KeepAlive</key>
+  <false/>
+
+  <key>StandardErrorPath</key>
+  <string>/tmp/dyndns_cron.err</string>
+
+  <key>StandardOutPath</key>
+  <string>/tmp/dyndns_cron.out</string>
+
+</dict>
+</plist>
