@@ -1,27 +1,25 @@
-#!/bin/bash
+#!/bin/sh
 
-USERNAME=USER
-PASSWORD=PASS
-HOSTNAME=DOMAIN.dyndns.org
-LOGFILE=/tmp/dyndns_lastip.log
-STOREDIPFILE=/tmp/dyndns_currentip.log
+IFS=$'\n'
+FILE_LOG='/var/tmp/freedns/freedns_pages.log'
+FILE_TOKENS='/var/tmp/freedns/freedns_tokens'
+FILE_IP='/var/tmp/freedns/ip'
 
-if [ ! -e $STOREDIPFILE ]; then
- touch $STOREDIPFILE
-fi
-
-NEWIP=$(curl https://icanhazip.com/)
-STOREDIP=$(cat $STOREDIPFILE)
-
-if [ "$NEWIP" != "$STOREDIP" ]; then
- RESULT=$(curl -o "$LOGFILE" -s "https://$USERNAME:$PASSWORD@members.dyndns.org/nic/update?hostname=$HOSTNAME&myip=$NEWIP")
-
- LOGLINE="[$(date +"%Y-%m-%d %H:%M:%S")] $RESULT"
- echo $NEWIP > $STOREDIPFILE
+IP=`curl -s -k https://ipinfo.io/ip`
+if [ ! -e "$FILE_IP" ]; then
+	OLD_IP="undefined"
 else
- LOGLINE="[$(date +"%Y-%m-%d %H:%M:%S")] No IP change"
+	OLD_IP=`cat $FILE_IP`
 fi
 
-echo $LOGLINE >> $LOGFILE
+if [ "$IP" != "$OLD_IP" ]; then
+	echo $IP > $FILE_IP
 
-exit 0
+	for tokens in `cat $FILE_TOKENS`
+	do
+		tokens=`echo $tokens | tr -d '[[:space:]]' | sed -e 's/#.*//g'`
+		if [ ! -z $tokens ]; then
+			curl -s -k https://freedns.afraid.org/dynamic/update.php?$tokens >> $FILE_LOG 2>&1
+		fi
+	done
+fi
