@@ -109,6 +109,7 @@ sudo rm -rf /private/var/log/* > /dev/null
 sudo rm -rf /private/var/tmp/* > /dev/null
 sudo rm -rf ~/Library/Containers/com.apple.mail/Data/Library/Mail\ Downloads/* > /dev/null
 sudo rm -rf ~/Library/Containers/com.mudflatsoftware.DropSync3/Data/Library/Application\ Support/DropSync\ 3/Logs/* > /dev/null
+: > ~/.zsh_history
 echo "✅ Done deleting all log and cache files."
 
 echo "🧹 Delete all containers cache..."
