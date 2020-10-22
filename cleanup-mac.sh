@@ -36,6 +36,8 @@ if type "brew" > /dev/null; then
     brew update
     echo "🔄 Upgrade and remove outdated formulae..."
     brew upgrade
+    brew upgrade --cask
+    brew cu --all
     echo "🧹 Cleanup Homebrew cache..."
     brew cleanup -s > /dev/null
     rm -rf $(brew --cache) > /dev/null
@@ -48,16 +50,16 @@ fi
 
 if type "gem" &> /dev/null; then
     echo "🔄 Updating gems..."
-	gem update > /dev/null
+    gem update > /dev/null
     echo "🔄 Updating gem system..."
-	gem update --system > /dev/null
+    gem update --system > /dev/null
     echo "🧹 Cleanup any old versions of gems..."
     gem cleanup > /dev/null
     echo "✅ Done updating and cleaning gem."
 fi
 
 if type "npm" &> /dev/null; then
-	echo "🔄  Upgrading NPM itself..."
+    echo "🔄  Upgrading NPM itself..."
     npm install npm@latest -g
     echo "🔄 Updating npm binaries..."
     npm update -g
@@ -70,9 +72,9 @@ if type "npm" &> /dev/null; then
 fi
 
 if type "apm" &> /dev/null; then
-	echo "⚛️ Upgrading Atom editor..."
+    echo "⚛️ Upgrading Atom editor..."
     apm upgrade -c false
-	echo "✅ Done upgrading Atom editor."
+    echo "✅ Done upgrading Atom editor."
 fi
 
 echo "🧹 Delete all log and cache files..."
