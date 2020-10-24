@@ -16,17 +16,24 @@ echo "🧽 Cleaning Service has started..."
 
 #Install updates
 echo "🔄 Installing needed updates..."
-	apt-get update --fix-missing
-	apt-get -y upgrade
-	apt-get -y dist-upgrade
+    apt-get update --fix-missing
+    apt-get -y upgrade
+    apt-get -y dist-upgrade
 echo "✅ Done installing updates."
+
+#Cleanup installs
+echo "🔄 Cleaning installs..."
+    apt-get clean
+    apt-get -y autoclean
+    apt-get -y autoremove --purge
+echo "✅ Done cleaning installs."
 
 #Update gem, if installed
 if type "gem" &> /dev/null; then
     echo "🔄 Updating gems..."
-	gem update > /dev/null
+    gem update > /dev/null
     echo "🔄 Updating gem system..."
-	gem update --system > /dev/null
+    gem update --system > /dev/null
     echo "🧹 Cleanup any old versions of gems..."
     gem cleanup > /dev/null
     echo "✅ Done updating and cleaning gem."
@@ -34,7 +41,7 @@ fi
 
 #Update npm, if installed
 if type "npm" &> /dev/null; then
-	echo "🔄  Upgrading NPM itself..."
+    echo "🔄  Upgrading NPM itself..."
     npm install npm@latest -g
     echo "🔄 Updating npm binaries..."
     npm update -g
@@ -46,21 +53,22 @@ if type "npm" &> /dev/null; then
     echo "✅ Done updating and cleaning npm."
 fi
 
-#Cleanup installs
-echo "🔄 Cleaning installs..."
-	apt-get clean
-	apt-get -y autoclean
-	apt-get -y autoremove
-echo "✅ Done cleaning installs."
-
 #Update grub
 echo "🔄 Updating grub..."
-	update-grub
+    update-grub
 echo "✅ Done updating grub."
+
+#cleanup /tmp directories
+echo "🧹 Cleanup temp files..."
+    rm -rf /tmp/*
+    rm -rf /var/tmp/*
+echo "✅ Done cleaning temp files."
 
 #Virus scan
 echo "🦠 Running virus scan..."
-	clamscan -voi
+    clamscan -r --bell -i /home/arnaud/
+    clamscan -r --bell -i /root/
+    clamscan -r --bell -i /var/
 echo "✅ Done running virus scan."
 
 echo "👏🏼 Cleaning Service has completed. Reboot now!"
