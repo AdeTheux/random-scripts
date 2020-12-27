@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
   <key>Label</key>
-  <string>org.detheux.mountvps</string>
+  <string>org.detheux.dyndns</string>
 
   <key>ProgramArguments</key>
     <array>

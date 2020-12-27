@@ -101,8 +101,8 @@ sudo rm -rf ~/Music/iTunes/Album\ Artwork/Generated/* > /dev/null
 sudo rm -rf ~/Music/iTunes/Album\ Artwork/Store/* > /dev/null
 sudo rm -rf /Library/Caches/* > /dev/null
 sudo rm -rf /Library/Logs/* > /dev/null
-sudo rm -rf ~/Library/Messages/Attachments/* > /dev/null
 sudo rm -rf ~/.bash_sessions/* > /dev/null
+sudo rm -rf ~/.zsh_sessions/* > /dev/null
 sudo rm -rf /private/tmp/* > /dev/null
 sudo rm -rf /private/var/folders/gs/ty91zcs96q3cmw39k6_mw9kw0000gp/0/* > /dev/null
 sudo rm -rf /private/var/folders/gs/ty91zcs96q3cmw39k6_mw9kw0000gp/C/* > /dev/null
@@ -110,7 +110,6 @@ sudo rm -rf /private/var/folders/gs/ty91zcs96q3cmw39k6_mw9kw0000gp/T/* > /dev/nu
 sudo rm -rf /private/var/log/* > /dev/null
 sudo rm -rf /private/var/tmp/* > /dev/null
 sudo rm -rf ~/Library/Containers/com.apple.mail/Data/Library/Mail\ Downloads/* > /dev/null
-sudo rm -rf ~/Library/Containers/com.mudflatsoftware.DropSync3/Data/Library/Application\ Support/DropSync\ 3/Logs/* > /dev/null
 : > ~/.zsh_history
 echo "✅ Done deleting all log and cache files."
 

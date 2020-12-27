@@ -4,15 +4,24 @@
 
 #   Set Paths
 #   ------------------------------------------------------------
-    export PATH="/usr/local/bin:${PATH}"
+export PATH="/usr/local/bin:${PATH}"
+export PATH="/usr/local/sbin:$PATH"
 #    export PATH="$PATH:/usr/local/bin/"
 #    export PATH="/usr/local/git/bin:/sw/bin/:/usr/local/bin:/usr/local/:/usr/local/sbin:/usr/local/mysql/bin:$PATH"
-	export PATH="$PATH:/usr/local/bin/sshfs"
+export PATH="$PATH:/usr/local/bin/sshfs"
 #   Set Default Editor (change 'Nano' to the editor of your choice)
 #   ------------------------------------------------------------
-    export EDITOR='/usr/bin/vim'
-	export GIT_EDITOR='/usr/bin/vim'
+export EDITOR='/usr/bin/vim'
+export GIT_EDITOR='/usr/bin/vim'
+# Configurate rbenv
+if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 
+#
+# Setting up zsh
+# ---------
+autoload -Uz colors && colors
+autoload -Uz compinit && compinit
+setopt prompt_subst
 
 #   -----------------------------
 #   2.  MAKE TERMINAL BETTER
@@ -69,7 +78,7 @@ alias rmmac='find . -iname ".DS*" -exec rm -rf {} \; ; find . -iname "._*" -exec
 
 
 #   ---------------------------------------
-#   8.  WEB DEVELOPMENT
+#   3.  WEB DEVELOPMENT
 #   ---------------------------------------
 
 alias apacheEdit='sudo edit /etc/httpd/httpd.conf'      # apacheEdit:       Edit httpd.conf
@@ -84,7 +93,7 @@ httpHeaders () { /usr/bin/curl -I -L $@ ; }             # httpHeaders:      Grab
 symbol="⚡ "
 
 #   ---------------------------------------
-#   9.  COLORS
+#   4.  COLORS
 #   ---------------------------------------
 
 # Set color variables
@@ -92,94 +101,8 @@ export CLICOLOR=1
 export LSCOLORS=ExFxBxDxCxegedabagacad
 
 
-#   ---------------------------------------
-#   9.  Change Prompt
-#   ---------------------------------------
+# Prompt :
+PS1="
+%F{1}[%T]%{$reset_color%} %F{3}%m%{$reset_color%} @ %F{5}%n%{$reset_color%} ➜ %F{6}%d%{$reset_color%}
+> "
 
-############################################
-
-# Modified from emilis bash prompt script
-
-# from https://github.com/emilis/emilis-config/blob/master/.bash_ps1
-
-#
-
-# Modified for Mac OS X by
-
-# @corndogcomputer
-
-###########################################
-# Fill with minuses
-
-# (this is recalculated every time the prompt is shown in function prompt_command):
-
-fill="___ "
-
-
-reset_style='\[\033[00m\]'
-
-status_style=$reset_style'\[\033[0;90m\]' # gray color; use 0;37m for lighter color
-
-prompt_style=$reset_style
-
-command_style=$reset_style'\[\033[1;29\]' # bold black
-
-# Prompt variable:
-
-
-PS1="$status_style"'$fill \t\n'"$prompt_style"'${debian_chroot:+($debian_chroot)}\[\033[38;5;208m\]\u \[\033[38;5;11m\]@ \[\033[38;5;14m\]\H \[\033[38;5;2m\]in \w\$'"$command_style \n
-💻 > "
-
-
-# Reset color for command output
-
-# (this one is invoked every time before a command is executed):
-
-trap 'echo -ne "\033[00m"' DEBUG
-
-
-function prompt_command {
-
-
-# create a $fill of all screen width minus the time string and a space:
-
-let fillsize=${COLUMNS}-9
-
-fill=""
-
-while [ "$fillsize" -gt "0" ]
-
-do
-
-fill="-${fill}" # fill with underscores to work on
-
-let fillsize=${fillsize}-1
-
-done
-
-
-# If this is an xterm set the title to user@host:dir
-
-case "$TERM" in
-
-xterm*|rxvt*)
-
-bname=`basename "${PWD/$HOME/~}"`
-
-echo -ne "\033]0;${bname}: ${USER}@${HOSTNAME}: ${PWD/$HOME/~}\007"
-
-;;
-
-*)
-
-;;
-
-esac
-
-
-}
-
-PROMPT_COMMAND=prompt_command
-export PATH="/usr/local/opt/icu4c/bin:$PATH"
-export PATH="/usr/local/opt/icu4c/sbin:$PATH"
-if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi

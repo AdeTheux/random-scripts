@@ -2,9 +2,9 @@
 #FreeDNS updater script
 
 #Variables
-DOMAINSWI="NAME.internet-box.ch"
+DOMAINSWI="viaduc.internet-box.ch"
 DOMAIN="SUBDOMAIN.mooo.com"
-UPDATEURL="http://USER:PASS@freedns.afraid.org/nic/update?hostname=$DOMAIN&myip="
+UPDATEURL="http://USER:PASS@freedns.afraid.org/nic/update?hostname=$DOMAIN&myip=$CURRENT"
 
 # Get the IP of Swisscom domain
 CURRENT=$(nslookup $DOMAINSWI|tail -n2|grep A|sed s/[^0-9.]//g)
@@ -13,6 +13,7 @@ REGISTERED=$(nslookup $DOMAIN|tail -n2|grep A|sed s/[^0-9.]//g)
 #Compare, and update if not up-to-date
 
    [ "$CURRENT" != "$REGISTERED" ] && {
-      wget -q -O /dev/null $UPDATEURL$CURRENT
-      echo "DNS updated from $REGISTERED to $CURRENT on: $(date)" >> dns_log.txt
-}
+     wget -q -O /dev/null $UPDATEURL$CURRENT
+     echo "$DOMAIN IP updated from $REGISTERED to $CURRENT on $(date)" >> /var/log/dns/dns_updater.txt
+#	  sh /home/arnaud/slack/slack_notify_dns.sh
+   }
