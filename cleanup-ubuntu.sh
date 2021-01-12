@@ -73,7 +73,7 @@ echo "✅ Done running virus scan."
 echo "🧹 Deleting node modules"
     rm -rf /home/arnaud/Documents/cleanup/node_modules/
 
-echo "Cleanup script ran on $(date)" >> /var/log/cleanup/cleanup_log.txt
+echo "Cleanup script ran on $(date)" >> /var/log/cleanup/cleanup.log
 
 echo "👏🏼 Cleaning Service has completed. Reboot now!"
     reboot
