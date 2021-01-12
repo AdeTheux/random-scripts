@@ -14,6 +14,6 @@ REGISTERED=$(nslookup $DOMAIN|tail -n2|grep A|sed s/[^0-9.]//g)
 
    [ "$CURRENT" != "$REGISTERED" ] && {
      wget -q -O /dev/null $UPDATEURL$CURRENT
-     echo "$DOMAIN IP updated from $REGISTERED to $CURRENT on $(date)" >> /var/log/dns/dns_updater.txt
+     echo "$DOMAIN IP updated from $REGISTERED to $CURRENT on $(date)" >> /var/log/dns/dns_updater.log
 #	  sh /home/arnaud/slack/slack_notify_dns.sh
    }
