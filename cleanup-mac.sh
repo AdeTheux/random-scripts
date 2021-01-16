@@ -37,7 +37,7 @@ if type "brew" > /dev/null; then
     echo "🔄 Upgrade and remove outdated formulae..."
     brew upgrade
     brew upgrade --cask
-    brew cu --all
+    brew cu --all -a
     echo "🧹 Cleanup Homebrew cache..."
     brew cleanup -s > /dev/null
     rm -rf $(brew --cache) > /dev/null
