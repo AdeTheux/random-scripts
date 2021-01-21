@@ -17,8 +17,8 @@ echo "🧽 Cleaning Service has started..."
 #Install updates
 echo "🔄 Installing needed updates..."
     apt-get update --fix-missing
-    apt-get -y upgrade
-    apt-get -y dist-upgrade
+    apt-get -y Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" upgrade
+    apt-get -y Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" dist-upgrade
 echo "✅ Done installing updates."
 
 #Cleanup installs
