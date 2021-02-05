@@ -17,8 +17,8 @@ echo "🧽 Cleaning Service has started..."
 #Install updates
 echo "🔄 Installing needed updates..."
     apt-get update --fix-missing
-    apt-get -y upgrade
-    apt-get -y dist-upgrade
+    apt-get -y -o Dpkg::Options::="--force-confdef" upgrade
+    apt-get -y -o Dpkg::Options::="--force-confdef" dist-upgrade
 echo "✅ Done installing updates."
 
 #Cleanup installs
@@ -75,5 +75,8 @@ echo "🧹 Deleting node modules"
 
 echo "Cleanup script ran on $(date)" >> /var/log/cleanup/cleanup.log
 
-echo "👏🏼 Cleaning Service has completed. Reboot now!"
+echo "ℹ️ Sending confirmation to Slack"
+    slack-webhook-monitoring -l "crit" -t "Nexus cleanup script" -m ":broom: Cleanup script ran succesfully"
+
+echo "👏🏼 Cleaning Service has completed. Rebooting now..."
     reboot
