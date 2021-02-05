@@ -1,9 +1,3 @@
 #!/bin/bash
-
-CHANNEL="#household"
-MSG="🗳 Torrent download completed: $TR_TORRENT_NAME ($TR_TIME_LOCALTIME)"
-
-PAYLOAD="payload={\"channel\": \"$CHANNEL\", \"text\": \"$MSG\"}"
-HOOK=https://hooks.slack.com/services/x/y/z
-
-curl -X POST --data-urlencode "$PAYLOAD" "$HOOK"
+MSG="Torrent download completed: $TR_TORRENT_NAME ($TR_TIME_LOCALTIME)"
+slack-webhook-household -l "good" -t ":inbox_tray: Transmission" -m "$MSG"
