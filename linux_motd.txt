@@ -1,0 +1,45 @@
+#!/bin/sh
+
+cat << EOF
+********************************************************************
+*                                                                  *
+* 🚨 WARNING: Unauthorised access to this system is forbidden and  *
+* will be prosecuted by law. All connections & actions are         *
+* monitored and recorded.                                          *
+*                                                                  *
+********************************************************************
+EOF
+
+echo
+printf "ℹ️ \033[1;37mWelcome to $(uname -a)\033[0m\n"
+echo
+
+user=$(whoami)
+date=`date`
+load=`cat /proc/loadavg | awk '{print $1" (1 min) "$2" (5 mins) "$3" (15 mins)"}'`
+root_usage=`df -h / | awk '/\// {print $(NF-1)}'`
+lacie_usage=`df -h /media/arnaud/LaCie/ | awk '/\// {print $(NF-1)}'`
+root_used=`df -h / | awk '/\// {print $(NF-2)}'`
+root_total=`df -h / | awk '/\// {print $(NF-3)}'`
+memory_usage=`awk '/^MemTotal:/ {total=$2} /^MemFree:/ {free=$2} /^Buffers:/ {buffers=$2} /^Cached:/ {cached=$2} END { printf("%3.1f%%", (total-(free+buffers+cached))/total*100)}' /proc/meminfo`
+memory=`free -m | awk '/Mem:/ { print $2 }'`
+memory_used=`free -m | awk '/buffers\/cache/ { print $3 }'`
+swap_usage=`awk '/^SwapTotal:/ { total=$2 } /^SwapFree:/ { free=$2} END { printf("%3.1f%%", (total-free)/total*100 )}' /proc/meminfo`
+users=` w -s | grep -v WHAT | grep -v "load average" | wc -l`
+time=`uptime | grep -ohe 'up .*' | sed 's/,/\ hours/g' | awk '{ printf $2" "$3 }'`
+processes_total=`ps aux | wc -l`
+processes_user=`ps -U ${user} u | wc -l`
+ip=$(hostname -I)
+lastlog=`lastlog -u ${user} | grep -v Latest |  awk '{ printf $5" "$6" "$7" "$8" "$9" from "$3 }')`
+
+echo "\033[1;37mSystem information as of: $date\033[0m"
+echo "\033[1;31mLast login........ \033[1;34m" $lastlog
+echo "\033[1;31mSystem load....... \033[1;34m" $load
+echo "\033[1;31mIP................ \033[1;34m" $ip
+echo "\033[1;31mUptime............ \033[1;34m" "$time"
+echo "\033[1;31mMemory usage...... \033[1;34m" $memory_usage
+echo "\033[1;31mUsage on /........ \033[1;34m" $root_usage
+echo "\033[1;31mUsage on LaCie/... \033[1;34m" $lacie_usage
+echo "\033[1;31mSwap usage........ \033[1;34m" $swap_usage
+echo "\033[1;31mSSH logins........ \033[1;34m" $users "open sessions"
+echo "\033[1;31mProcesses......... \033[1;34m" $processes_total "total," $processes_user "yours"
