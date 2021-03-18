@@ -5,7 +5,6 @@
 #   Set Paths
 #   ------------------------------------------------------------
 export PATH="/usr/local/bin:${PATH}"
-export PATH="/usr/local/sbin:$PATH"
 #    export PATH="$PATH:/usr/local/bin/"
 #    export PATH="/usr/local/git/bin:/sw/bin/:/usr/local/bin:/usr/local/:/usr/local/sbin:/usr/local/mysql/bin:$PATH"
 export PATH="$PATH:/usr/local/bin/sshfs"
@@ -13,15 +12,7 @@ export PATH="$PATH:/usr/local/bin/sshfs"
 #   ------------------------------------------------------------
 export EDITOR='/usr/bin/vim'
 export GIT_EDITOR='/usr/bin/vim'
-# Configurate rbenv
-if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 
-#
-# Setting up zsh
-# ---------
-autoload -Uz colors && colors
-autoload -Uz compinit && compinit
-setopt prompt_subst
 
 #   -----------------------------
 #   2.  MAKE TERMINAL BETTER
@@ -101,8 +92,9 @@ export CLICOLOR=1
 export LSCOLORS=ExFxBxDxCxegedabagacad
 
 
-# Prompt :
-PS1="
-%F{1}[%T]%{$reset_color%} %F{3}%m%{$reset_color%} @ %F{5}%n%{$reset_color%} ➜ %F{6}%d%{$reset_color%}
-> "
+# Prompt variable:
 
+
+PS1="\n\[\033[38;5;9m\][\A] \[$(tput sgr0)\]\[\033[38;5;15m\]\[$(tput sgr0)\]\[\033[38;5;208m\]\u\[$(tput sgr0)\]\[\033[38;5;15m\] @ \[$(tput sgr0)\]\[\033[38;5;11m\]\h\[$(tput sgr0)\]\[\033[38;5;15m\] in \[$(tput sgr0)\]\[\033[38;5;6m\]\w\[$(tput sgr0)\]\[\033[38;5;15m\]\n> \[$(tput sgr0)\]"
+
+if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
