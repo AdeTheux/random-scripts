@@ -1,0 +1,24 @@
+#!/bin/sh
+
+curl -s https://www.cloudflare.com/ips-v4 -o /tmp/cf_ips
+curl -s https://www.cloudflare.com/ips-v6 >> /tmp/cf_ips
+
+# Allow all traffic from Cloudflare IPs (no ports restriction)
+for cfip in `cat /tmp/cf_ips`; do ufw allow proto tcp from $cfip comment 'Cloudflare IP'; done
+
+ufw reload > /dev/null
+iptables-save > /etc/iptables/rules.v4
+iptables-save > /etc/iptables/rules.v6
+slack-webhook-monitoring -l "good" -t "🏢 Firewall update" -m ":unlock: Firewall rules updated and saved"
+echo "Firewall rules updated successfully on $(date)" >> /var/log/dns/cloudflare_ips.log
+
+
+# OTHER EXAMPLE RULES
+# Retrict to port 80
+#for cfip in `cat /tmp/cf_ips`; do ufw allow proto tcp from $cfip to any port 80 comment 'Cloudflare IP'; done
+
+# Restrict to port 443
+#for cfip in `cat /tmp/cf_ips`; do ufw allow proto tcp from $cfip to any port 443 comment 'Cloudflare IP'; done
+
+# Restrict to ports 80 & 443
+#for cfip in `cat /tmp/cf_ips`; do ufw allow proto tcp from $cfip to any port 80,443 comment 'Cloudflare IP'; done

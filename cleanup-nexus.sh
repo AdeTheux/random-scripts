@@ -76,7 +76,8 @@ echo "🧹 Deleting node modules"
 echo "Cleanup script ran on $(date)" >> /var/log/cleanup/cleanup.log
 
 echo "ℹ️ Sending confirmation to Slack"
-    slack-webhook-monitoring -l "crit" -t "Nexus cleanup script" -m ":broom: Cleanup script ran succesfully"
+    slack-webhook-monitoring -l "crit" -t "🏡 Nexus cleanup" -m ":broom: Cleanup script ran succesfully. Rebooting..."
 
 echo "👏🏼 Cleaning Service has completed. Rebooting now..."
+
     reboot

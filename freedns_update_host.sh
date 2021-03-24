@@ -2,9 +2,9 @@
 #FreeDNS updater script
 
 #Variables
-DOMAINSWI="DOMAIN1"
-DOMAIN="DOMAIN2"
-UPDATEURL="http://USER:PASS@freedns.afraid.org/nic/update?hostname=$DOMAIN&myip=$CURRENT"
+DOMAINSWI="x"
+DOMAIN="x.mooo.com"
+UPDATEURL="http://x:x@freedns.afraid.org/nic/update?hostname=$DOMAIN&myip=$CURRENT"
 
 # Get the IP of Swisscom domain
 CURRENT=$(nslookup $DOMAINSWI|tail -n2|grep A|sed s/[^0-9.]//g)
@@ -15,6 +15,6 @@ REGISTERED=$(nslookup $DOMAIN|tail -n2|grep A|sed s/[^0-9.]//g)
    [ "$CURRENT" != "$REGISTERED" ] && {
      wget -q -O /dev/null $UPDATEURL$CURRENT
      echo "$DOMAIN IP updated from $REGISTERED to $CURRENT on $(date)" >> /var/log/dns/dns_updater.log
-     slack-webhook-household -l "good" -t "DNS update" -m ":electric_plug: Home backup DNS updated"
+     slack-webhook-household -l "good" -t "🏡 DNS updated" -m ":electric_plug: Home backup DNS updated"
    }
-
+   

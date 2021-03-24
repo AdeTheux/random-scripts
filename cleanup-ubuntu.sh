@@ -71,9 +71,12 @@ echo "🦠 Running virus scan..."
 echo "✅ Done running virus scan."
 
 echo "🧹 Deleting node modules"
-    rm -rf /home/arnaud/Documents/cleanup/node_modules/
+    rm -rf /root/node_modules/
 
 echo "Cleanup script ran on $(date)" >> /var/log/cleanup/cleanup.log
 
-echo "👏🏼 Cleaning Service has completed. Reboot now!"
+echo "ℹ️ Sending confirmation to Slack"
+    slack-webhook-monitoring -l "crit" -t "🏢 VPS cleanup" -m ":broom: Cleanup script ran succesfully. Rebooting..."
+
+echo "👏🏼 Cleaning Service has completed. Rebooting now..."
     reboot

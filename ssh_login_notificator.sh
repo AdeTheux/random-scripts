@@ -1,0 +1,1 @@
+slack-webhook-monitoring -l "warn" -t "🏡 SSH access" -m ":key: Nexus SSH access detected"
